@@ -1,0 +1,194 @@
+/* ==========================================================================
+   YERMO LIMPIO — Hoja de estilos
+   --------------------------------------------------------------------------
+   Índice
+     1. Variables de diseño
+     2. Base y reinicio
+     3. Pantalla de juego (canvas + capa de texto)
+     4. Ayuda de teclado
+     5. Controles táctiles
+     6. Adaptación a dispositivos táctiles
+   ========================================================================== */
+
+
+/* 1. Variables de diseño
+   ========================================================================== */
+:root {
+  /* Paleta */
+  --color-bg: #1a1612;
+  --color-text: #e8dcc0;
+  --color-border: #5a4a30;
+  --color-button: #3a3126;
+  --color-button-active: #6a5a3a;
+  --color-focus: #ffd890;
+
+  /* Tipografía */
+  --font-ui: "Courier New", monospace;
+
+  /* Pantalla del juego: 256x176 px lógicos */
+  --screen-ratio: calc(256 / 176);
+  --screen-border: 3px;
+  --reserved-height: 110px; /* espacio vertical para la ayuda y los márgenes */
+
+  /* Controles táctiles */
+  --touch-size: 46px;
+  --touch-gap: 2px;
+
+  /* Respeta las zonas seguras de móviles con notch */
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --color-bg: #0e0c0a;
+  }
+}
+
+:root[data-theme="dark"] {
+  --color-bg: #0e0c0a;
+}
+
+
+/* 2. Base y reinicio
+   ========================================================================== */
+html {
+  scroll-padding-top: env(safe-area-inset-top, 0px);
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-ui);
+  touch-action: manipulation;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.game {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+}
+
+
+/* 3. Pantalla de juego (canvas + capa de texto)
+   ========================================================================== */
+.game__screen {
+  position: relative;
+  display: flex;
+}
+
+/* Canvas del juego: se escala sin suavizado para conservar el pixel art */
+.game__canvas {
+  width: min(100vw, calc((100vh - var(--reserved-height)) * var(--screen-ratio)));
+  background: #000;
+  border: var(--screen-border) solid var(--color-border);
+  image-rendering: pixelated;
+}
+
+/* Capa de texto: se dibuja a resolución real para que se lea con nitidez */
+.game__text-layer {
+  position: absolute;
+  top: var(--screen-border);
+  left: var(--screen-border);
+  width: calc(100% - 2 * var(--screen-border));
+  height: calc(100% - 2 * var(--screen-border));
+  pointer-events: none;
+}
+
+
+/* 4. Ayuda de teclado
+   ========================================================================== */
+.game__help {
+  margin: 0;
+  padding: 0 8px;
+  font-size: 12px;
+  text-align: center;
+  opacity: 0.7;
+}
+
+
+/* 5. Controles táctiles
+   ========================================================================== */
+.touch-controls {
+  display: none;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 520px;
+  padding: 0 10px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.touch-controls__dpad {
+  display: grid;
+  grid-template: repeat(3, var(--touch-size)) / repeat(3, var(--touch-size));
+  gap: var(--touch-gap);
+}
+
+.touch-controls__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 6px;
+  width: 190px;
+}
+
+.touch-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  min-width: var(--touch-size);
+  height: var(--touch-size);
+  padding: 0;
+  background: var(--color-button);
+  border: 2px solid var(--color-border);
+  border-radius: 8px;
+  color: var(--color-text);
+  font: 13px var(--font-ui);
+  cursor: pointer;
+}
+
+.touch-button:active {
+  background: var(--color-button-active);
+}
+
+.touch-button:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+/* Posición de cada flecha en la cruceta */
+.touch-button--up    { grid-area: 1 / 2; }
+.touch-button--left  { grid-area: 2 / 1; }
+.touch-button--right { grid-area: 2 / 3; }
+.touch-button--down  { grid-area: 3 / 2; }
+
+
+/* 6. Adaptación a dispositivos táctiles
+   ========================================================================== */
+@media (pointer: coarse) {
+  .touch-controls {
+    display: flex;
+  }
+
+  .game__help {
+    display: none;
+  }
+}
