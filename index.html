@@ -1,50 +1,49 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="description" content="Yermo Limpio: juego educativo 2D pixel art sobre reciclaje, ecología y ahorro en un mundo post-apocalíptico.">
-  <title>Yermo Limpio</title>
-
-  <link rel="stylesheet" href="./styles.css">
-  <script src="./game.js" defer></script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Scrapheap: Protocolo Vertedero</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;600;700&family=Cormorant+Garamond:ital,wght@1,500;1,600&family=Saira+Stencil+One&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="src/ui/style.css">
 </head>
-
 <body>
-  <main class="game">
-
-    <!-- Pantalla del juego: canvas pixelado + capa de texto nítida -->
-    <div class="game__screen">
-      <canvas id="c" class="game__canvas" width="256" height="176"
-              aria-label="Pantalla del juego Yermo Limpio"></canvas>
-      <canvas id="o" class="game__text-layer" aria-hidden="true"></canvas>
-    </div>
-
-    <p class="game__help">
-      Flechas/WASD mover · Espacio aspirar · K agua · E actuar · R retirar · Q misiones
-    </p>
-
-    <!-- Controles táctiles (solo visibles en pantallas táctiles) -->
-    <div class="touch-controls" aria-label="Controles táctiles">
-      <div class="touch-controls__dpad">
-        <button type="button" class="touch-button touch-button--up"    data-k="arrowup"    aria-label="Arriba">▲</button>
-        <button type="button" class="touch-button touch-button--left"  data-k="arrowleft"  aria-label="Izquierda">◀</button>
-        <button type="button" class="touch-button touch-button--right" data-k="arrowright" aria-label="Derecha">▶</button>
-        <button type="button" class="touch-button touch-button--down"  data-k="arrowdown"  aria-label="Abajo">▼</button>
-      </div>
-
-      <div class="touch-controls__actions">
-        <button type="button" class="touch-button" data-k=" ">Aspirar</button>
-        <button type="button" class="touch-button" data-k="k">Agua</button>
-        <button type="button" class="touch-button" data-k="e">E</button>
-        <button type="button" class="touch-button" data-k="r">R</button>
-        <button type="button" class="touch-button" data-k="q">Misión</button>
-      </div>
-    </div>
-
-    <noscript>Este juego necesita JavaScript activado para funcionar.</noscript>
-  </main>
+<div id="loading">Cargando chatarra…</div>
+<canvas id="game"></canvas>
+<script src="src/data/bundle.js"></script>
+<!-- BUILD:SCRIPTS (el orden importa) -->
+<script src="src/core/util.js"></script>
+<script src="src/core/data.js"></script>
+<script src="src/core/iso.js"></script>
+<script src="src/core/input.js"></script>
+<script src="src/core/audio.js"></script>
+<script src="src/core/sprites.js"></script>
+<script src="src/core/save.js"></script>
+<script src="src/systems/stats.js"></script>
+<script src="src/systems/items.js"></script>
+<script src="src/systems/effects.js"></script>
+<script src="src/systems/combat.js"></script>
+<script src="src/systems/pathfind.js"></script>
+<script src="src/systems/skills.js"></script>
+<script src="src/systems/hazards.js"></script>
+<script src="src/systems/quests.js"></script>
+<script src="src/levels/map.js"></script>
+<script src="src/levels/mapgen.js"></script>
+<script src="src/entities/art.js"></script>
+<script src="src/entities/unit.js"></script>
+<script src="src/entities/player.js"></script>
+<script src="src/entities/enemy.js"></script>
+<script src="src/entities/bosses.js"></script>
+<script src="src/entities/objects.js"></script>
+<script src="src/levels/world.js"></script>
+<script src="src/ui/ui.js"></script>
+<script src="src/ui/minimap.js"></script>
+<script src="src/ui/title.js"></script>
+<script src="src/ui/endscreen.js"></script>
+<script src="src/core/debug.js"></script>
+<script src="src/core/game.js"></script>
+<!-- /BUILD:SCRIPTS -->
 </body>
-
 </html>
